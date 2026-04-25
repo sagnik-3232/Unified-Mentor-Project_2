@@ -1,9 +1,33 @@
+import subprocess
+import sys
+
+# Auto-install required packages if missing
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package, "--quiet"])
+
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+except ImportError:
+    install("plotly>=5.20.0")
+    import plotly.express as px
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
+try:
+    import pandas as pd
+except ImportError:
+    install("pandas>=2.0.0")
+    import pandas as pd
+
+try:
+    import numpy as np
+except ImportError:
+    install("numpy>=1.26.0")
+    import numpy as np
+
 import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import warnings
 import os
 warnings.filterwarnings('ignore')
